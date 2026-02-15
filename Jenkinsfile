@@ -8,17 +8,13 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                script {
-                    docker.build("mywebsite:latest")
-                }
+                sh 'docker build -t mywebsite:latest .'
             }
         }
         stage('Deploy Container') {
             steps {
-                script {
-                    sh 'docker rm -f mywebsite || true'
-                    sh 'docker run -d --name mywebsite -p 80:80 mywebsite:latest'
-                }
+                sh 'docker rm -f mywebsite || true'
+                sh 'docker run -d --name mywebsite -p 80:80 mywebsite:latest'
             }
         }
     }
